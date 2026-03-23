@@ -1,0 +1,976 @@
+<style>
+:root {
+  --font-sans: "Inter", "Segoe UI", Roboto, sans-serif;
+
+  /* Pastel color palette */
+  --color-bg: #f9fafb;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f1f3f6;
+  --color-border: #d9dee5;
+  --color-border-secondary: #e0e6eb;
+  --color-border-tertiary: #ebeff4;
+
+  /* Text colors */
+  --color-text-primary: #33363f;
+  --color-text-secondary: #5b616e;
+  --color-text-tertiary: #8b9098;
+
+  /* Pastel semantic colors */
+  --color-primary: #9cb9ff;
+  --color-primary-light: #e6edff;
+
+  --color-success: #b9e6c9;
+  --color-success-light: #e8f6ee;
+  --color-warning: #fff2cc;
+  --color-warning-light: #fffaf0;
+  
+  --color-info: #c8dcf0;
+  --color-info-light: #f0f5fb;
+
+  --border-radius-md: 10px;
+  --border-radius-lg: 14px;
+}
+
+/* GLOBAL RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+/* ROOT CONTAINER */
+.root {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem 1rem;
+}
+
+/* NAVIGATION BAR */
+.nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.nb {
+  padding: 8px 18px;
+  border-radius: 24px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.nb:hover {
+  background: var(--color-info-light);
+  border-color: var(--color-info);
+  color: var(--color-text-primary);
+}
+
+.nb.on {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(140,160,255,0.3);
+}
+
+/* PAGE SECTIONS */
+.pg { display: none; }
+.pg.on { display: block; }
+
+/* HERO SUMMARY CARDS */
+.hero {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-bottom: 1.5rem;
+}
+
+.hc {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  padding: 1rem 1.25rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.hl {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  margin-bottom: 4px;
+}
+
+.hv {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.hs {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+
+/* SEMESTER STRIP */
+.sem-strip {
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border-tertiary);
+  margin-bottom: 1.5rem;
+}
+
+.ss {
+  flex: 1;
+  padding: .6rem .5rem;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.s1 { background: #e7f0fa; color: #396ea3; }
+.s2 { background: #ebe9fb; color: #514ab5; }
+.sf { background: #fdf1d6; color: #8d5f0b; }
+
+/* ACCORDION */
+.accord {
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-md);
+  margin-bottom: 12px;
+  overflow: hidden;
+  background: var(--color-surface);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.ah {
+  padding: 0.85rem 1.1rem;
+  background: var(--color-surface-alt);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.ah:hover {
+  background: var(--color-info-light);
+}
+
+.ah h3 {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.ah .meta {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+}
+
+.chevron {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  transition: transform .2s ease;
+}
+
+.open .chevron {
+  transform: rotate(180deg);
+}
+
+.ab {
+  display: none;
+  padding: 1rem 1.25rem;
+  background: var(--color-surface);
+}
+
+.ab.on {
+  display: block;
+}
+
+/* TOPIC GRID */
+.topic-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.tc {
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-md);
+  padding: .7rem .9rem;
+  transition: transform 0.1s ease;
+}
+
+.tc:hover {
+  transform: scale(1.01);
+  background: var(--color-info-light);
+}
+
+.tn {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 3px;
+}
+
+.tw {
+  font-size: 10.5px;
+  color: var(--color-text-tertiary);
+}
+
+/* RESOURCE LISTS */
+.rl {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  margin: .8rem 0 4px;
+}
+
+.ri {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  margin-bottom: 4px;
+  padding-left: 12px;
+  position: relative;
+  line-height: 1.45;
+}
+
+.ri::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--color-text-tertiary);
+}
+
+.ri a {
+  color: #4c7dde;
+  text-decoration: none;
+}
+
+/* TAG PILLS */
+.pill {
+  display: inline-block;
+  font-size: 10.5px;
+  padding: 3px 8px;
+  border-radius: 16px;
+  font-weight: 500;
+  margin-right: 4px;
+}
+
+.pb { background: #d7e9ff; color: #264f91; }
+.pp { background: #e6e4ff; color: #4e45b7; }
+.pt { background: #daf4ec; color: #1a6e57; }
+.pa { background: #fff2d8; color: #855b18; }
+.pg2 { background: #e9f4e0; color: #3b6d11; }
+
+/* PROGRESS TRACKER */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: .9rem;
+  align-items: center;
+}
+
+.fb {
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  font-size: 11px;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  transition: all .15s;
+}
+
+.fb.on,
+.fb:hover {
+  background: var(--color-primary-light);
+  color: var(--color-text-primary);
+  border-color: var(--color-primary);
+}
+
+.progress-bar {
+  height: 5px;
+  background: var(--color-surface-alt);
+  border-radius: 3px;
+  margin-top: 4px;
+}
+
+.pb-fill {
+  height: 5px;
+  border-radius: 3px;
+  background: var(--color-primary);
+  transition: width .3s ease;
+}
+
+/* STATUS ICONS */
+.status {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  background: var(--color-surface-alt);
+  transition: all 0.2s;
+}
+
+.status.done {
+  background: var(--color-success);
+  border-color: #8dcda7;
+  color: #1b5b30;
+}
+
+.status.prog {
+  background: var(--color-warning);
+  border-color: #debc63;
+  color: #855f0d;
+}
+
+/* NOTE INPUT */
+.note-input {
+  width: 100%;
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--border-radius-md);
+  padding: 5px 8px;
+  font-size: 11px;
+  font-family: var(--font-sans);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  outline: none;
+}
+
+.note-input:focus {
+  border-color: var(--color-primary);
+  background: var(--color-info-light);
+}
+
+/* TABLE */
+.tbl-wrap {
+  overflow-x: auto;
+  margin-top: .5rem;
+}
+
+table.tr {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+table.tr th {
+  background: var(--color-surface-alt);
+  padding: 7px 8px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border-tertiary);
+  white-space: nowrap;
+}
+
+table.tr td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--color-border-tertiary);
+  color: var(--color-text-primary);
+  vertical-align: middle;
+}
+
+table.tr tr:last-child td {
+  border-bottom: none;
+}
+
+/* TRANSITIONS */
+button, .nb, .fb, .tc, .status {
+  transition: all 0.2s ease;
+}
+</style>
+
+
+<div class="root">
+<div class="nav">
+  <button class="nb on" onclick="nav('overview')">Overview</button>
+  <button class="nb" onclick="nav('sem1')">Semester 1 — SDE Sprint</button>
+  <button class="nb" onclick="nav('sem2')">Semester 2 — Systems & Infra</button>
+  <button class="nb" onclick="nav('sem3')">Semester 3 — Advanced SDE</button>
+  <button class="nb" onclick="nav('tracker')">Progress Tracker</button>
+</div>
+
+<!-- OVERVIEW -->
+<div id="pg-overview" class="pg on">
+  <div class="hero">
+    <div class="hc"><div class="hl">Duration</div><div class="hv">12 mo</div><div class="hs">Mar 2026 → Mar 2027</div></div>
+    <div class="hc"><div class="hl">Total subjects</div><div class="hv">10</div><div class="hs">Across 3 semesters</div></div>
+    <div class="hc"><div class="hl">Daily hours</div><div class="hv">3–4 hrs</div><div class="hs">Weekday + weekend</div></div>
+    <div class="hc"><div class="hl">Job switch</div><div class="hv">Jun '26</div><div class="hs">Sprint 1 builds towards this</div></div>
+  </div>
+
+  <div class="sem-strip">
+    <div class="ss s1">Sprint 1<br>Mar–Jun '26<br>Interview Foundations</div>
+    <div class="ss sf">⚑ Job Switch<br>Jun 2026</div>
+    <div class="ss s1">Sprint 2<br>Jun–Sep '26<br>Systems + Full-Stack</div>
+    <div class="ss s2">Sprint 3<br>Sep–Dec '26<br>Advanced DSA + DB</div>
+    <div class="ss s2">Sprint 4<br>Dec '26–Mar '27<br>Architecture + CS Theory</div>
+  </div>
+
+  <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:1rem;line-height:1.7;">This curriculum is modelled on the core requirements of Stanford MSCS, MIT 6-3, and CMU SCS — filtered for SDE track. The three pillars are: <strong>CS Foundations</strong> (what every top uni demands), <strong>Systems & Infrastructure</strong> (what product companies test), and <strong>Software Engineering craft</strong> (what makes you hireable and senior-ready). Your existing Notion tracker's 178 items are absorbed and reorganised into 10 subjects below.</div>
+
+  <div style="font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px;">Curriculum map</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div class="tc"><div class="tn">1. Math for CS</div><div class="tw">12 weeks · Foundations pillar · Modelled on MIT 6.042J</div></div>
+    <div class="tc"><div class="tn">2. DSA — Core Patterns</div><div class="tw">14 weeks · Arrays → Trees → Graphs</div></div>
+    <div class="tc"><div class="tn">3. DSA — Advanced & DP</div><div class="tw">10 weeks · DP, Advanced Graph, Segment Trees</div></div>
+    <div class="tc"><div class="tn">4. Operating Systems</div><div class="tw">8 weeks · Modelled on Stanford CS112 + OSTEP</div></div>
+    <div class="tc"><div class="tn">5. Computer Networks</div><div class="tw">8 weeks · Modelled on Kurose top-down approach</div></div>
+    <div class="tc"><div class="tn">6. Databases</div><div class="tw">10 weeks · SQL + NoSQL + System Design DB layer</div></div>
+    <div class="tc"><div class="tn">7. System Design</div><div class="tw">10 weeks · Distributed systems, scalability, CAP</div></div>
+    <div class="tc"><div class="tn">8. Java + Spring Boot</div><div class="tw">12 weeks · Core → Concurrency → Microservices</div></div>
+    <div class="tc"><div class="tn">9. Full-Stack (Angular + React)</div><div class="tw">10 weeks · Frontend craft + Next.js</div></div>
+    <div class="tc"><div class="tn">10. Software Engineering</div><div class="tw">8 weeks · Design patterns, clean code, architecture</div></div>
+  </div>
+</div>
+
+<!-- SEM 1: SDE Sprint -->
+<div id="pg-sem1" class="pg">
+  <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:1rem;line-height:1.6;"><span class="pill pa">⚑ Job-switch aligned</span> Semester 1 front-loads everything needed for SDE interviews by June. Modelled on Stanford's CS foundations requirement and MIT's algorithms track.</div>
+
+  <!-- Subject 1 -->
+  <div class="accord">
+    <div class="ah" onclick="tog(this)">
+      <div><h3>Subject 1 — Math for CS</h3><div class="meta">MIT 6.042J inspired · 12 weeks · Mar 24 – Jun 15</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span class="pill pb">Foundations</span><span class="chevron">▼</span></div>
+    </div>
+    <div class="ab">
+      <div class="topic-grid">
+        <div class="tc"><div class="tn">Number systems & binary arithmetic</div><div class="tw">Week 1–2</div></div>
+        <div class="tc"><div class="tn">Boolean algebra & logic gates</div><div class="tw">Week 3–4</div></div>
+        <div class="tc"><div class="tn">Set theory & functions</div><div class="tw">Week 5–6</div></div>
+        <div class="tc"><div class="tn">Propositional & predicate logic</div><div class="tw">Week 7–8</div></div>
+        <div class="tc"><div class="tn">Proof techniques (induction, contradiction)</div><div class="tw">Week 9–10</div></div>
+        <div class="tc"><div class="tn">Combinatorics & counting</div><div class="tw">Week 11–12</div></div>
+      </div>
+      <div class="rl">Books</div>
+      <div class="ri">How to Prove It — Daniel Velleman</div>
+      <div class="ri">Discrete Mathematics — Kenneth Rosen (Chapters 1–6)</div>
+      <div class="ri">Concrete Mathematics — Graham, Knuth & Patashnik</div>
+      <div class="rl">Courses</div>
+      <div class="ri"><a href="https://ocw.mit.edu/courses/6-042j-mathematics-for-computer-science-fall-2010" target="_blank">MIT 6.042J — Mathematics for CS (free OCW)</a></div>
+      <div class="ri"><a href="https://www.nand2tetris.org" target="_blank">Nand2Tetris Part 1 — Coursera (Boolean + Logic Gates)</a></div>
+      <div class="rl">YouTube</div>
+      <div class="ri">TrevTutor — Discrete Mathematics full playlist</div>
+      <div class="ri">Neso Academy — Digital Electronics: Boolean Algebra</div>
+      <div class="ri">3Blue1Brown — Logic and proof visualisations</div>
+      <div class="rl">Articles & Blogs</div>
+      <div class="ri">GeeksforGeeks — Number Systems series (binary, hex, octal)</div>
+      <div class="ri">Brilliant.org — Logic & Proofs course (free tier)</div>
+      <div class="ri">CS50 Harvard Week 0 — cs50.harvard.edu/x</div>
+    </div>
+  </div>
+
+  <!-- Subject 2 DSA Core -->
+  <div class="accord">
+    <div class="ah" onclick="tog(this)">
+      <div><h3>Subject 2 — DSA Core Patterns</h3><div class="meta">Stanford CS161 + NeetCode 150 · 14 weeks · Mar 24 – Jun 30</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span class="pill pb">Interview-critical</span><span class="chevron">▼</span></div>
+    </div>
+    <div class="ab">
+      <div class="topic-grid">
+        <div class="tc"><div class="tn">Big-O & space complexity</div><div class="tw">Week 1</div></div>
+        <div class="tc"><div class="tn">Arrays: two pointers, sliding window</div><div class="tw">Week 2–3</div></div>
+        <div class="tc"><div class="tn">Strings, hashing, anagrams</div><div class="tw">Week 4</div></div>
+        <div class="tc"><div class="tn">Prefix sums & difference arrays</div><div class="tw">Week 5</div></div>
+        <div class="tc"><div class="tn">Linked lists (singly, doubly, Floyd's)</div><div class="tw">Week 6–7</div></div>
+        <div class="tc"><div class="tn">Stacks, queues, monotonic stack</div><div class="tw">Week 8</div></div>
+        <div class="tc"><div class="tn">Recursion & backtracking</div><div class="tw">Week 9–10</div></div>
+        <div class="tc"><div class="tn">Binary trees (BFS, DFS, traversals)</div><div class="tw">Week 11–12</div></div>
+        <div class="tc"><div class="tn">BST, Heaps, Priority Queue</div><div class="tw">Week 13</div></div>
+        <div class="tc"><div class="tn">Sorting & Binary Search patterns</div><div class="tw">Week 14</div></div>
+      </div>
+      <div class="rl">Books</div>
+      <div class="ri">Introduction to Algorithms (CLRS) — Ch 1–14</div>
+      <div class="ri">Cracking the Coding Interview — Gayle McDowell</div>
+      <div class="ri">Elements of Programming Interviews — Aziz et al.</div>
+      <div class="rl">Courses</div>
+      <div class="ri"><a href="https://neetcode.io" target="_blank">NeetCode 150 — neetcode.io (free)</a></div>
+      <div class="ri"><a href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011" target="_blank">MIT 6.006 — Introduction to Algorithms (free OCW)</a></div>
+      <div class="ri"><a href="https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2" target="_blank">Striver A2Z DSA Sheet — takeuforward.org</a></div>
+      <div class="rl">YouTube</div>
+      <div class="ri">Abdul Bari — Algorithms full playlist</div>
+      <div class="ri">NeetCode — Arrays, Trees, Graphs playlists</div>
+      <div class="ri">Back To Back SWE — sliding window & two pointer</div>
+      <div class="rl">Articles & Blogs</div>
+      <div class="ri">LeetCode Explore Cards (free) — Arrays, Strings, Trees</div>
+      <div class="ri">GeeksforGeeks — DSA topic-wise deep dives</div>
+      <div class="ri">interviewing.io blog — real interview problem analysis</div>
+    </div>
+  </div>
+
+  <!-- Subject 3: OS -->
+  <div class="accord">
+    <div class="ah" onclick="tog(this)">
+      <div><h3>Subject 4 — Operating Systems</h3><div class="meta">Stanford CS112 + OSTEP · 8 weeks · Apr – Jun</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span class="pill pt">Systems pillar</span><span class="chevron">▼</span></div>
+    </div>
+    <div class="ab">
+      <div class="topic-grid">
+        <div class="tc"><div class="tn">Processes vs threads, context switching</div><div class="tw">Week 1–2</div></div>
+        <div class="tc"><div class="tn">CPU scheduling (FCFS, SJF, Round Robin)</div><div class="tw">Week 3</div></div>
+        <div class="tc"><div class="tn">Memory management: paging, virtual memory</div><div class="tw">Week 4–5</div></div>
+        <div class="tc"><div class="tn">Concurrency: mutexes, semaphores, deadlocks</div><div class="tw">Week 6</div></div>
+        <div class="tc"><div class="tn">File systems & I/O fundamentals</div><div class="tw">Week 7</div></div>
+        <div class="tc"><div class="tn">Containers & OS virtualisation basics</div><div class="tw">Week 8</div></div>
+      </div>
+      <div class="rl">Books</div>
+      <div class="ri"><a href="https://pages.cs.wisc.edu/~remzi/OSTEP" target="_blank">Operating Systems: Three Easy Pieces (free PDF) — Arpaci-Dusseau</a></div>
+      <div class="ri">Modern Operating Systems — Tanenbaum</div>
+      <div class="rl">Courses</div>
+      <div class="ri"><a href="https://pages.cs.wisc.edu/~remzi/OSTEP" target="_blank">Wisconsin OS Course (OSTEP companion)</a></div>
+      <div class="ri">Stanford CS240 — Advanced Topics in OS (open lecture notes)</div>
+      <div class="rl">YouTube</div>
+      <div class="ri">Hussein Nasser — OS Fundamentals for developers</div>
+      <div class="ri">Jenny's Lectures — OS playlist (processes, memory)</div>
+      <div class="rl">Articles & Blogs</div>
+      <div class="ri">Linux From Scratch (conceptual walkthroughs)</div>
+      <div class="ri">ByteByteGo — OS concepts for system design</div>
+    </div>
+  </div>
+
+  <!-- Networks -->
+  <div class="accord">
+    <div class="ah" onclick="tog(this)">
+      <div><h3>Subject 5 — Computer Networks</h3><div class="meta">Kurose top-down · 8 weeks · Apr – Jun</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span class="pill pt">Systems pillar</span><span class="chevron">▼</span></div>
+    </div>
+    <div class="ab">
+      <div class="topic-grid">
+        <div class="tc"><div class="tn">OSI model & TCP/IP stack</div><div class="tw">Week 1</div></div>
+        <div class="tc"><div class="tn">HTTP/1.1 vs HTTP/2 vs HTTP/3</div><div class="tw">Week 2</div></div>
+        <div class="tc"><div class="tn">DNS, CDN, URL resolution</div><div class="tw">Week 3</div></div>
+        <div class="tc"><div class="tn">TCP vs UDP, flow control</div><div class="tw">Week 4–5</div></div>
+        <div class="tc"><div class="tn">REST API design principles</div><div class="tw">Week 6</div></div>
+        <div class="tc"><div class="tn">WebSockets & real-time comms</div><div class="tw">Week 7</div></div>
+        <div class="tc"><div class="tn">Load balancers, reverse proxies, Nginx</div><div class="tw">Week 8</div></div>
+      </div>
+      <div class="rl">Books</div>
+      <div class="ri">Computer Networking: A Top-Down Approach — Kurose & Ross</div>
+      <div class="ri">REST API Design Rulebook — Mark Masse (O'Reilly)</div>
+      <div class="rl">Courses</div>
+      <div class="ri"><a href="https://bytebytego.com" target="_blank">ByteByteGo System Design Newsletter + Book</a></div>
+      <div class="ri">Stanford CS144 — Introduction to Computer Networking (open)</div>
+      <div class="rl">YouTube</div>
+      <div class="ri">Hussein Nasser — HTTP deep dive, WebSockets, DNS playlists</div>
+      <div class="ri">ByteByteGo — DNS, CDN, load balancer animations</div>
+      <div class="rl">Articles & Blogs</div>
+      <div class="ri">High Scalability blog — highscalability.com</div>
+      <div class="ri">Cloudflare Learning Center — networking fundamentals</div>
+    </div>
+  </div>
+</div>
+
+<!-- SEM 2 -->
+<div id="pg-sem2" class="pg">
+  <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:1rem;line-height:1.6;">Semester 2 covers production engineering depth — the layer that separates a junior from a mid-senior SDE. Modelled on Stanford's Systems specialisation and UC Berkeley's database track.</div>
+
+  <!-- Databases -->
+  <div class="accord">
+    <div class="ah" onclick="tog(this)">
+      <div><h3>Subject 6 — Databases</h3><div class="meta">Stanford CS145 + CMU 15-445 · 10 weeks · Jun–Sep</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span class="pill pp">Data pillar</span><span class="chevron">▼</span></div>
+    </div>
+    <div class="ab">
+      <div class="topic-grid">
+        <div class="tc"><div class="tn">SQL fundamentals & advanced queries</div><div class="tw">Week 1–2</div></div>
+        <div class="tc"><div class="tn">Joins, indexes, query optimisation</div><div class="tw">Week 3–4</div></div>
+        <div class="tc"><div class="tn">ACID, transactions, isolation levels</div><div class="tw">Week 5</div></div>
+        <div class="tc"><div class="tn">PostgreSQL internals & tuning</div><div class="tw">Week 6</div></div>
+        <div class="tc"><div class="tn">MongoDB: documents, CRUD, aggregations</div><div class="tw">Week 7</div></div>
+        <div class="tc"><div class="tn">Redis: caching, pub/sub, sorted sets</div><div class="tw">Week 8</div></div>
+        <div class="tc"><div class="tn">SQL vs NoSQL trade-offs</div><div class="tw">Week 9</div></div>
+        <div class="tc"><div class="tn">Elasticsearch full-text search</div><div class="tw">Week 10</div></div>
+      </div>
+      <div class="rl">Books</div>
+      <div class="ri">Designing Data-Intensive Applications — Martin Kleppmann</div>
+      <div class="ri">Database Internals — Alex Petrov</div>
+      <div class="rl">Courses</div>
+      <div class="ri"><a href="https://15445.courses.cs.cmu.edu" target="_blank">CMU 15-445 — Database Systems (Andy Pavlo, free videos)</a></div>
+      <div class="ri"><a href="https://learn.mongodb.com" target="_blank">MongoDB University (free)</a></div>
+      <div class="ri"><a href="https://university.redis.com" target="_blank">Redis University (free)</a></div>
+      <div class="rl">YouTube</div>
+      <div class="ri">CMU Database Group — full lecture series on YouTube</div>
+      <div class="ri">Hussein Nasser — PostgreSQL internals, indexing deep dives</div>
+      <div class="rl">Articles & Blogs</div>
+      <div class="ri">use-the-index-luke.com — SQL indexing for developers</div>
+      <div class="ri">Postgres docs — EXPLAIN ANALYZE tutorial</div>
+    </div>
+  </div>
+
+  <!-- System Design -->
+  <div class="accord">
+    <div class="ah" onclick="tog(this)">
+      <div><h3>Subject 7 — System Design</h3><div class="meta">Stanford CS244 + Designing Data-Intensive Apps · 10 weeks · Jul–Sep</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span class="pill pp">Architecture</span><span class="chevron">▼</span></div>
+    </div>
+    <div class="ab">
+      <div class="topic-grid">
+        <div class="tc"><div class="tn">Scalability: vertical vs horizontal</div><div class="tw">Week 1</div></div>
+        <div class="tc"><div class="tn">CAP theorem & eventual consistency</div><div class="tw">Week 2</div></div>
+        <div class="tc"><div class="tn">Caching strategies (Redis, CDN, write-through)</div><div class="tw">Week 3</div></div>
+        <div class="tc"><div class="tn">Message queues & Kafka</div><div class="tw">Week 4–5</div></div>
+        <div class="tc"><div class="tn">Microservices & API gateway</div><div class="tw">Week 6</div></div>
+        <div class="tc"><div class="tn">Rate limiting, circuit breakers, retries</div><div class="tw">Week 7</div></div>
+        <div class="tc"><div class="tn">Consistent hashing & DB sharding</div><div class="tw">Week 8</div></div>
+        <div class="tc"><div class="tn">Design patterns: URL shortener, Twitter feed</div><div class="tw">Week 9–10</div></div>
+      </div>
+      <div class="rl">Books</div>
+      <div class="ri">Designing Data-Intensive Applications — Kleppmann (must-read)</div>
+      <div class="ri">System Design Interview Vol 1 & 2 — Alex Xu (ByteByteGo)</div>
+      <div class="ri">Microservices Patterns — Chris Richardson</div>
+      <div class="rl">Courses</div>
+      <div class="ri"><a href="https://www.educative.io/courses/grokking-the-system-design-interview" target="_blank">Grokking System Design Interview — Educative</a></div>
+      <div class="ri"><a href="https://bytebytego.com" target="_blank">ByteByteGo — bytebytego.com (newsletter + videos)</a></div>
+      <div class="rl">YouTube</div>
+      <div class="ri">ByteByteGo — system design animations & case studies</div>
+      <div class="ri">Gaurav Sen — system design channel</div>
+      <div class="ri">Jordan has no life — distributed systems deep dives</div>
+      <div class="rl">Articles & Blogs</div>
+      <div class="ri">engineering.fb.com — Facebook/Meta engineering blog</div>
+      <div class="ri">netflixtechblog.com — Netflix tech blog</div>
+    </div>
+  </div>
+
+  <!-- Java + Spring -->
+  <div class="accord">
+    <div class="ah" onclick="tog(this)">
+      <div><h3>Subject 8 — Java + Spring Boot</h3><div class="meta">Production-grade Java mastery · 12 weeks · Jun–Sep</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span class="pill pg2">Your stack</span><span class="chevron">▼</span></div>
+    </div>
+    <div class="ab">
+      <div class="topic-grid">
+        <div class="tc"><div class="tn">Java OOP, interfaces, generics, enums</div><div class="tw">Week 1–2</div></div>
+        <div class="tc"><div class="tn">Collections Framework & Streams API</div><div class="tw">Week 3</div></div>
+        <div class="tc"><div class="tn">Java concurrency: threads, executors</div><div class="tw">Week 4–5</div></div>
+        <div class="tc"><div class="tn">Java 17–21 modern features</div><div class="tw">Week 6</div></div>
+        <div class="tc"><div class="tn">JVM internals: GC, memory model</div><div class="tw">Week 7</div></div>
+        <div class="tc"><div class="tn">Spring Boot: DI, REST controllers, auto-config</div><div class="tw">Week 8–9</div></div>
+        <div class="tc"><div class="tn">Spring Security: JWT, OAuth2</div><div class="tw">Week 10</div></div>
+        <div class="tc"><div class="tn">Spring Data JPA & Hibernate</div><div class="tw">Week 11</div></div>
+        <div class="tc"><div class="tn">Spring Cloud & Microservices</div><div class="tw">Week 12</div></div>
+      </div>
+      <div class="rl">Books</div>
+      <div class="ri">Effective Java — Joshua Bloch (must-read for every Java dev)</div>
+      <div class="ri">Java Concurrency in Practice — Brian Goetz</div>
+      <div class="ri">Spring Boot in Action — Craig Walls</div>
+      <div class="ri">Spring Security in Action — Laurentiu Spilca</div>
+      <div class="rl">Courses</div>
+      <div class="ri"><a href="https://www.udemy.com/course/spring-framework-5-beginner-to-guru" target="_blank">Spring Framework 5 — Udemy (John Thompson)</a></div>
+      <div class="ri"><a href="https://www.baeldung.com" target="_blank">Baeldung.com — the definitive Java/Spring reference</a></div>
+      <div class="rl">YouTube</div>
+      <div class="ri">Amigoscode — Spring Boot full courses</div>
+      <div class="ri">Telusko — Java 21 features walkthroughs</div>
+      <div class="rl">Articles & Blogs</div>
+      <div class="ri">baeldung.com — every Spring topic covered in depth</div>
+      <div class="ri">dev.java — official Java developer tutorials</div>
+    </div>
+  </div>
+</div>
+
+<!-- SEM 3 -->
+<div id="pg-sem3" class="pg">
+  <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:1rem;line-height:1.6;">Semester 3 covers the advanced layers that distinguish senior engineers — DP, advanced CS theory, full-stack mastery, and software engineering craft.</div>
+
+  <!-- Advanced DSA -->
+  <div class="accord">
+    <div class="ah" onclick="tog(this)">
+      <div><h3>Subject 3 — Advanced DSA & Dynamic Programming</h3><div class="meta">CMU + Stanford competitive track · 10 weeks · Sep–Dec</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span class="pill pb">Interview hard</span><span class="chevron">▼</span></div>
+    </div>
+    <div class="ab">
+      <div class="topic-grid">
+        <div class="tc"><div class="tn">Tries (prefix trees)</div><div class="tw">Week 1</div></div>
+        <div class="tc"><div class="tn">Graph: topological sort, Union-Find</div><div class="tw">Week 2–3</div></div>
+        <div class="tc"><div class="tn">Shortest path: Dijkstra, Bellman-Ford</div><div class="tw">Week 4</div></div>
+        <div class="tc"><div class="tn">Minimum spanning trees</div><div class="tw">Week 5</div></div>
+        <div class="tc"><div class="tn">1D DP (Fibonacci, coin change, climbing stairs)</div><div class="tw">Week 6</div></div>
+        <div class="tc"><div class="tn">2D DP (LCS, edit distance, unique paths)</div><div class="tw">Week 7–8</div></div>
+        <div class="tc"><div class="tn">Knapsack variants (0/1, unbounded)</div><div class="tw">Week 9</div></div>
+        <div class="tc"><div class="tn">Segment trees & range queries</div><div class="tw">Week 10</div></div>
+      </div>
+      <div class="rl">Books</div>
+      <div class="ri">Introduction to Algorithms (CLRS) — Ch 15–25 (DP & Graph)</div>
+      <div class="ri">Dynamic Programming for Coding Interviews — Meenakshi & Kamal</div>
+      <div class="ri">Algorithm Design Manual — Steven Skiena</div>
+      <div class="rl">Courses</div>
+      <div class="ri"><a href="https://www.youtube.com/watch?v=FfXoiwwnxFw&list=PLgUwDviBIf0qUlt5H_kiKYaNSqJ81PMMY" target="_blank">Striver DP Series — YouTube</a></div>
+      <div class="ri"><a href="https://cp-algorithms.com" target="_blank">CP-Algorithms.com — Segment Trees, Union-Find</a></div>
+      <div class="ri"><a href="https://www.youtube.com/playlist?list=PLDV1Zeh2NRsDGO4--qE8yH72HFL1Km93P" target="_blank">William Fiset — Graph Theory playlist</a></div>
+      <div class="rl">YouTube</div>
+      <div class="ri">Errichto — DP intuition & contest problems</div>
+      <div class="ri">NeetCode — DP and advanced graph patterns</div>
+    </div>
+  </div>
+
+  <!-- Full Stack -->
+  <div class="accord">
+    <div class="ah" onclick="tog(this)">
+      <div><h3>Subject 9 — Full-Stack (Angular, React, Next.js)</h3><div class="meta">Production frontend mastery · 10 weeks · Oct–Dec</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span class="pill pg2">Your stack</span><span class="chevron">▼</span></div>
+    </div>
+    <div class="ab">
+      <div class="topic-grid">
+        <div class="tc"><div class="tn">Angular: components, modules, services (review)</div><div class="tw">Week 1</div></div>
+        <div class="tc"><div class="tn">RxJS & reactive programming in Angular</div><div class="tw">Week 2–3</div></div>
+        <div class="tc"><div class="tn">Angular routing, lazy loading, guards</div><div class="tw">Week 4</div></div>
+        <div class="tc"><div class="tn">Angular state: NgRx / signals (v17+)</div><div class="tw">Week 5</div></div>
+        <div class="tc"><div class="tn">React hooks: useEffect, useContext, custom</div><div class="tw">Week 6–7</div></div>
+        <div class="tc"><div class="tn">Next.js: SSR, SSG, App Router</div><div class="tw">Week 8–9</div></div>
+        <div class="tc"><div class="tn">React state: Zustand / Redux Toolkit</div><div class="tw">Week 10</div></div>
+      </div>
+      <div class="rl">Books</div>
+      <div class="ri">Fluent React — Tejas Kumar (O'Reilly)</div>
+      <div class="ri">Angular Development with TypeScript — Yakov Fain</div>
+      <div class="rl">Courses</div>
+      <div class="ri"><a href="https://angular.dev/tutorials" target="_blank">Angular Official Tutorial — angular.dev</a></div>
+      <div class="ri"><a href="https://nextjs.org/learn" target="_blank">Next.js Official Tutorial — nextjs.org/learn</a></div>
+      <div class="ri"><a href="https://epicreact.dev" target="_blank">Epic React — Kent C. Dodds</a></div>
+      <div class="rl">YouTube</div>
+      <div class="ri">Fireship.io — Angular, React, Next.js quick-starts</div>
+      <div class="ri">Jack Herrington — React patterns & hooks deep dives</div>
+    </div>
+  </div>
+
+  <!-- Software Engineering -->
+  <div class="accord">
+    <div class="ah" onclick="tog(this)">
+      <div><h3>Subject 10 — Software Engineering Craft</h3><div class="meta">CMU SE + Clean Code · 8 weeks · Dec '26 – Feb '27</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span class="pill pa">Senior-ready</span><span class="chevron">▼</span></div>
+    </div>
+    <div class="ab">
+      <div class="topic-grid">
+        <div class="tc"><div class="tn">Clean code: naming, functions, structure</div><div class="tw">Week 1–2</div></div>
+        <div class="tc"><div class="tn">Creational design patterns</div><div class="tw">Week 3</div></div>
+        <div class="tc"><div class="tn">Structural & behavioural patterns</div><div class="tw">Week 4–5</div></div>
+        <div class="tc"><div class="tn">Refactoring techniques (Fowler's catalogue)</div><div class="tw">Week 6</div></div>
+        <div class="tc"><div class="tn">Monolith vs microservices architecture</div><div class="tw">Week 7</div></div>
+        <div class="tc"><div class="tn">Domain-Driven Design basics</div><div class="tw">Week 8</div></div>
+      </div>
+      <div class="rl">Books</div>
+      <div class="ri">Clean Code — Robert C. Martin</div>
+      <div class="ri">Head First Design Patterns — Freeman & Robson</div>
+      <div class="ri">Refactoring — Martin Fowler (2nd edition)</div>
+      <div class="ri">DDD Distilled — Vaughn Vernon</div>
+      <div class="rl">Courses</div>
+      <div class="ri"><a href="https://google.github.io/eng-practices" target="_blank">Google Engineering Practices — eng-practices (free)</a></div>
+      <div class="ri"><a href="https://12factor.net" target="_blank">The Twelve-Factor App — 12factor.net (free)</a></div>
+      <div class="rl">YouTube</div>
+      <div class="ri">Christopher Okhravi — Design Patterns playlist</div>
+      <div class="ri">CodeAesthetic — clean code & refactoring channel</div>
+    </div>
+  </div>
+
+  <!-- CS Theory -->
+  <div class="accord">
+    <div class="ah" onclick="tog(this)">
+      <div><h3>Bonus — CS Theory (Probability, Linear Algebra, Info Theory)</h3><div class="meta">Stanford CS109 + 3Blue1Brown · Jan–Mar 2027</div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span class="pill pp">Depth layer</span><span class="chevron">▼</span></div>
+    </div>
+    <div class="ab">
+      <div class="topic-grid">
+        <div class="tc"><div class="tn">Probability & statistics for CS</div><div class="tw">Week 1–3</div></div>
+        <div class="tc"><div class="tn">Linear algebra (vectors, matrices, eigenvalues)</div><div class="tw">Week 4–6</div></div>
+        <div class="tc"><div class="tn">Calculus & gradients (chain rule, backprop)</div><div class="tw">Week 7–8</div></div>
+        <div class="tc"><div class="tn">Information theory (entropy, KL divergence)</div><div class="tw">Week 9–10</div></div>
+      </div>
+      <div class="rl">Books</div>
+      <div class="ri">Introduction to Probability — Blitzstein & Hwang</div>
+      <div class="ri">Linear Algebra Done Right — Sheldon Axler</div>
+      <div class="ri">Mathematics for Machine Learning — Deisenroth et al. (free PDF)</div>
+      <div class="ri">The Elements of Information Theory — Cover & Thomas</div>
+      <div class="rl">Courses</div>
+      <div class="ri"><a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" target="_blank">3Blue1Brown — Essence of Linear Algebra</a></div>
+      <div class="ri"><a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr" target="_blank">3Blue1Brown — Essence of Calculus</a></div>
+      <div class="ri">Stanford CS109 — Probability for CS (open course page)</div>
+    </div>
+  </div>
+</div>
+
+<!-- TRACKER -->
+<div id="pg-tracker" class="pg">
+  <div class="filter-bar">
+    <span style="font-size:11px;color:var(--color-text-secondary)">Filter:</span>
+    <select class="fb" onchange="filterTable()" id="cat-filter">
+      <option value="all">All categories</option>
+      <option value="DSA">DSA</option>
+      <option value="Systems">Systems & OS</option>
+      <option value="Full-Stack">Full-Stack</option>
+      <option value="Databases">Databases</option>
+      <option value="Design">System Design</option>
+      <option value="Foundations">Foundations</option>
+      <option value="SE">Software Eng</option>
+    </select>
+    <select class="fb" onchange="filterTable()" id="lvl-filter">
+      <option value="all">All levels</option>
+      <option value="Beginner">🌱 Beginner</option>
+      <option value="Intermediate">🌿 Intermediate</option>
+      <option value="Advanced">🌳 Advanced</option>
+    </select>
+    <button class="fb" onclick="resetAll()">Reset all</button>
+    <span id="prog-summary" style="font-size:11px;color:var(--color-text-secondary);margin-left:auto">0 / 50 done</span>
+  </div>
+  <div class="progress-bar"><div class="pb-fill" id="global-bar" style="width:0%"></div></div>
+  <div style="margin-top:.5rem;font-size:10px;color:var(--color-text-tertiary);margin-bottom:.75rem">Click ☐ to mark done · Click ◐ for in-progress</div>
+  <div class="tbl-wrap">
+    <table class="tr" id="track-table">
+      <thead>
+        <tr>
+          <th style="width:28px">#</th>
+          <th>Topic</th>
+          <th>Subject</th>
+          <th>Level</th>
+          <th>Sprint</th>
+          <th>Status</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="track-body"></tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<script>
+const topics=[
+  {id:1,topic:"Number systems & binary arithmetic",subj:"Foundations",cat:"Foundations",lvl:"Beginner",sprint:"S1"},
+  {id:2,topic:"Boolean algebra & logic gates",subj:"Foundations",cat:"Foundations",lvl:"Beginner",sprint:"S1"},
+  {id:3,topic:"Set theory & functions",subj:"Foundations",cat:"Foundations",lvl:"Beginner",sprint:"S3"},
+  {id:4,topic:"Propositional & predicate logic",subj:"Foundations",cat:"Foundations",lvl:"Beginner",sprint:"S1"},
+  {id:5,topic:"Proof techniques",subj:"Foundations",cat:"Foundations",lvl:"Intermediate",sprint:"S1"},
+  {id:6,topic:"Combinatorics & counting",subj:"Foundations",cat:"Foundations",lvl:"Intermediate",sprint:"S3"},
+  {id:7,topic:"Probability & statistics basics",subj:"Foundations",cat:"Foundations",lvl:"Intermediate",sprint:"S3"},
+  {id:8,topic:"Linear algebra (vectors, matrices)",subj:"Foundations",cat:"Foundations",lvl:"Intermediate",sprint:"S3"},
+  {id:9,topic:"Calculus & gradients",subj:"Foundations",cat:"Foundations",lvl:"Intermediate",sprint:"S3"},
+  {id:10,topic:"Information theory",subj:"Foundations",cat:"Foundations",lvl:"Advanced",sprint:"S3"},
+  {id:11,topic:"Big-O notation & time complexity",subj:"DSA Core",cat:"DSA",lvl:"Beginner",sprint:"S1"},
+  {id:12,topic:"Space complexity analysis",subj:"DSA Core",cat:"DSA",lvl:"Beginner",sprint:"S1"},
+  {id:13,topic:"Arrays: two pointers, sliding window",subj:"DSA Core",cat:"DSA",lvl:"Beginner",sprint:"S1"},
+  {id:14,topic:"Strings: manipulation, hashing",subj:"DSA Core",cat:"DSA",lvl:"Beginner",sprint:"S1"},
+  {id:15,topic:"Prefix sums & difference arrays",subj:"DSA Core",cat:"DSA",lvl:"Intermediate",sprint:"S1"},
+  {id:16,topic:"Matrix / 2D array traversal",subj:"DSA Core",cat:"DSA",lvl:"Intermediate",sprint:"S2"},
+  {id:17,topic:"Singly & doubly linked lists",subj:"DSA Core",cat:"DSA",lvl:"Beginner",sprint:"S1"},
+  {id:18,topic:"Fast & slow pointer (Floyd's cycle)",subj:"DSA Core",cat:"DSA",lvl:"Intermediate",sprint:"S1"},
+  {id:19,topic:"Stack & monotonic stack",subj:"DSA Core",cat:"DSA",lvl:"Beginner",sprint:"S1"},
+  {id:20,topic:"Queue, deque, priority queue",subj:"DSA Core",cat:"DSA",lvl:"Beginner",sprint:"S1"},
+  {id:21,topic:"Recursion & call stack",subj:"DSA Core",cat:"DSA",lvl:"Beginner",sprint:"S1"},
+  {id:22,topic:"Backtracking (subsets, permutations)",subj:"DSA Core",cat:"DSA",lvl:"Intermediate",sprint:"S2"},
+  {id:23,topic:"Binary trees: BFS, DFS, traversals",subj:"DSA Core",cat:"DSA",lvl:"Intermediate",sprint:"S2"},
+  {id:24,topic:"BST: insert, delete, validate",subj:"DSA Core",cat:"DSA",lvl:"Intermediate",sprint:"S2"},
+  {id:25,topic:"Heaps & priority queues",subj:"DSA Core",cat:"DSA",lvl:"Intermediate",sprint:"S2"},
+  {id:26,topic:"Sorting algorithms (bubble→quicksort)",subj:"DSA Core",cat:"DSA",lvl:"Beginner",sprint:"S1"},
+  {id:27,topic:"Binary search patterns",subj:"DSA Core",cat:"DSA",lvl:"Intermediate",sprint:"S1"},
+  {id:28,topic:"Graph representations",subj:"DSA Adv",cat:"DSA",lvl:"Intermediate",sprint:"S2"},
+  {id:29,topic:"BFS & DFS on graphs",subj:"DSA Adv",cat:"DSA",lvl:"Intermediate",sprint:"S2"},
+  {id:30,topic:"Topological sort",subj:"DSA Adv",cat:"DSA",lvl:"Intermediate",sprint:"S3"},
+  {id:31,topic:"Dijkstra & Bellman-Ford",subj:"DSA Adv",cat:"DSA",lvl:"Advanced",sprint:"S3"},
+  {id:32,topic:"Union-Find / DSU",subj:"DSA Adv",cat:"DSA",lvl:"Advanced",sprint:"S3"},
+  {id:33,topic:"Minimum spanning trees",subj:"DSA Adv",cat:"DSA",lvl:"Advanced",sprint:"S3"},
+  {id:34,topic:"Tries (prefix trees)",subj:"DSA Adv",cat:"DSA",lvl:"Advanced",sprint:"S3"},
+  {id:35,topic:"1D DP: Fibonacci, coin change",subj:"DSA Adv",cat:"DSA",lvl:"Intermediate",sprint:"S3"},
+  {id:36,topic:"2D DP: LCS, edit distance",subj:"DSA Adv",cat:"DSA",lvl:"Advanced",sprint:"S3"},
+  {id:37,topic:"Knapsack variants",subj:"DSA Adv",cat:"DSA",lvl:"Advanced",sprint:"S3"},
+  {id:38,topic:"Segment trees & range queries",subj:"DSA Adv",cat:"DSA",lvl:"Advanced",sprint:"S3"},
+  {id:39,topic:"Processes vs threads, context switching",subj:"Operating Systems",cat:"Systems",lvl:"Beginner",sprint:"S1"},
+  {id:40,topic:"CPU scheduling",subj:"Operating Systems",cat:"Systems",lvl:"Intermediate",sprint:"S1"},
+  {id:41,topic:"Memory management: paging, virtual memory",subj:"Operating Systems",cat:"Systems",lvl:"Intermediate",sprint:"S1"},
+  {id:42,topic:"Concurrency: mutexes, semaphores, deadlocks",subj:"Operating Systems",cat:"Systems",lvl:"Intermediate",sprint:"S2"},
+  {id:43,topic:"File systems & I/O fundamentals",subj:"Operating Systems",cat:"Systems",lvl:"Advanced",sprint:"S2"},
+  {id:44,topic:"OSI model & TCP/IP stack",subj:"Networks",cat:"Systems",lvl:"Beginner",sprint:"S1"},
+  {id:45,topic:"HTTP/1.1 vs HTTP/2 vs HTTP/3",subj:"Networks",cat:"Systems",lvl:"Beginner",sprint:"S1"},
+  {id:46,topic:"DNS, CDN, URL resolution",subj:"Networks",cat:"Systems",lvl:"Beginner",sprint:"S1"},
+  {id:47,topic:"TCP vs UDP, flow control",subj:"Networks",cat:"Systems",lvl:"Intermediate",sprint:"S2"},
+  {id:48,topic:"REST API design",subj:"Networks",cat:"Full-Stack",lvl:"Intermediate",sprint:"S2"},
+  {id:49,topic:"WebSockets & real-time communication",subj:"Networks",cat:"Systems",lvl:"Intermediate",sprint:"S2"},
+  {id:50,topic:"Load balancers, reverse proxies, Nginx",subj:"Networks",cat:"Systems",lvl:"Advanced",sprint:"S2"},
+];
+const state={};
+topics.forEach(t=>state[t.id]={status:'todo',note:''});
+
+function nav(id){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('pg-'+id).classList.add('on');
+  event.target.classList.add('on');
+}
+function tog(h){
+  h.classList.toggle('open');
+  h.nextElementSibling.classList.toggle('on');
+}
+function cycleStatus(id){
+  const s=state[id].status;
+  if(s==='todo') state[id].status='prog';
+  else if(s==='prog') state[id].status='done';
+  else state[id].status='todo';
+  renderTable();
+  updateProgress();
+}
+function saveNote(id,val){state[id].note=val}
+function updateProgress(){
+  const done=Object.values(state).filter(s=>s.status==='done').length;
+  const total=topics.length;
+  document.getElementById('prog-summary').textContent=done+' / '+total+' done';
+  document.getElementById('global-bar').style.width=Math.round(done/total*100)+'%';
+}
+function renderTable(){
+  const catF=document.getElementById('cat-filter').value;
+  const lvlF=document.getElementById('lvl-filter').value;
+  const filtered=topics.filter(t=>{
+    if(catF!=='all'&&!t.cat.includes(catF)&&t.subj.indexOf(catF)<0) return false;
+    if(lvlF!=='all'&&t.lvl!==lvlF) return false;
+    return true;
+  });
+  const body=document.getElementById('track-body');
+  body.innerHTML=filtered.map(t=>{
+    const s=state[t.id].status;
+    const icon=s==='done'?'✓':s==='prog'?'◐':'';
+    const cls=s==='done'?'done':s==='prog'?'prog':'';
+    const sprintLabel=t.sprint==='S1'?'Sprint 1':t.sprint==='S2'?'Sprint 2':'Sprint 3';
+    const sprintColor=t.sprint==='S1'?'#185fa5':t.sprint==='S2'?'#0f6e56':'#534ab7';
+    return `<tr>
+      <td style="color:var(--color-text-tertiary)">${t.id}</td>
+      <td style="font-weight:500;max-width:180px">${t.topic}</td>
+      <td><span style="font-size:10px;color:var(--color-text-secondary)">${t.subj}</span></td>
+      <td><span style="font-size:10px">${{Beginner:'🌱',Intermediate:'🌿',Advanced:'🌳'}[t.lvl]} ${t.lvl}</span></td>
+      <td><span style="font-size:10px;color:${sprintColor};font-weight:500">${sprintLabel}</span></td>
+      <td><div class="status ${cls}" onclick="cycleStatus(${t.id})">${icon}</div></td>
+      <td><input class="note-input" style="width:120px" placeholder="notes..." value="${state[t.id].note}" oninput="saveNote(${t.id},this.value)" /></td>
+    </tr>`;
+  }).join('');
+}
+function filterTable(){renderTable()}
+function resetAll(){
+  topics.forEach(t=>{state[t.id]={status:'todo',note:''}});
+  document.getElementById('cat-filter').value='all';
+  document.getElementById('lvl-filter').value='all';
+  renderTable();updateProgress();
+}
+renderTable();updateProgress();
+</script>
